@@ -9,7 +9,6 @@ const MapComponent = () => {
 	const mapRef = useRef({ view: null, portalWebMap: null });
 	const portalURL = "https://age.spatialfrontgis.com/portal";
 	const portalId = "a759d3ccd3754a2e91d307d3a6321dc1";
-
 	let cityLayer;
 	let weatherLayer;
 	const { currCity, weatherData, cityList, dispatch } = useContext(
@@ -45,12 +44,18 @@ const MapComponent = () => {
 						cityQuery.where = "objectid > 0";
 						cityQuery.outFields = ["name", "objectid", "field1", "id"];
 
-						cityLayer.queryFeatures(cityQuery).then(function (response) {
-							dispatch({
-								type: "POPULATE_CITY_LIST",
-								payload: response.features,
+						try {
+							cityLayer.queryFeatures(cityQuery).then(function (response) {
+								if (!cityList.length) {
+									dispatch({
+										type: "POPULATE_CITY_LIST",
+										payload: response.features,
+									});
+								}
 							});
-						});
+						} catch (err) {
+							console.log(err);
+						}
 					}
 
 					if (weatherLayer) {

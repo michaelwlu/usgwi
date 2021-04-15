@@ -8,15 +8,15 @@ const CitySelect = () => {
 		dispatch({ type: "CHANGE_CITY", payload: event.target.value });
 	};
 
-	let cityNames = (cityList.length && cityList.map(city => {
-		return (
-			{
-				name: city.attributes.name,
-				id: city.attributes.id
-			}
-		)
-	}))
-		|| [];
+	let cityNames =
+		(cityList.length &&
+			cityList.map((city) => {
+				return {
+					name: city.attributes.name,
+					id: city.attributes.id,
+				};
+			})) ||
+		[];
 
 	return (
 		<div>
@@ -28,14 +28,12 @@ const CitySelect = () => {
 					onChange={handleChange}
 				>
 					<option key="0">Select city</option>
-					{cityNames.length && cityNames.map((city, index) => (
-						<option
-							key={index}
-							value={city.objectid}
-						>
-							{city.name}
-						</option>
-					))}
+					{cityNames.length &&
+						cityNames.map((city, index) => (
+							<option key={index} value={city.id}>
+								{city.name}
+							</option>
+						))}
 				</select>
 			</form>
 		</div>

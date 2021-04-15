@@ -6,7 +6,7 @@ const initialState = {
 	stateList: [],
 	cityList: [],
 	weatherData: [],
-	currentWeatherList: []
+	currentWeatherList: [],
 };
 
 const reducer = (state, { type, payload }) => {
