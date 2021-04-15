@@ -43,8 +43,10 @@ const MapComponent = () => {
 						cityQuery.outFields = [ "name", "objectid", "field1", "id" ];
 
 						cityLayer.queryFeatures(cityQuery)
-						.then(function(response){
-							dispatch({ type: "POPULATE_CITY_LIST", payload: response.features });
+						.then(function(response) {
+							if (!cityList.length) {
+								dispatch({ type: "POPULATE_CITY_LIST", payload: response.features });
+							}
 						 });
 					}
 				});
