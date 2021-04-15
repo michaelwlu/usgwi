@@ -61,17 +61,23 @@ const MapComponent = () => {
 					if (weatherLayer) {
 						var weatherQuery = weatherLayer.createQuery();
 						weatherLayer.where = "objectid > 0";
-<<<<<<< HEAD
-						weatherLayer.outFields = ["avg_temp"];
+						weatherLayer.outFields = [
+							"avg_temp",
+							"name",
+							"state",
+							"id",
+							"year",
+						];
 
 						weatherLayer.queryFeatures(weatherQuery).then(function (response) {
 							const formattedData =
 								response.features.map((item) => {
 									return {
-										name: item.name,
-										id: item.id,
-										avg_temp: item.avg_temp,
-										state: item.state,
+										name: item.attributes.name,
+										id: item.attributes.id,
+										avg_temp: item.attributes.avg_temp,
+										state: item.attributes.state,
+										year: item.attributes.year,
 									};
 								}) || [];
 							dispatch({
@@ -79,25 +85,6 @@ const MapComponent = () => {
 								payload: formattedData,
 							});
 						});
-=======
-						weatherLayer.outFields = ['avg_temp', 'name', 'state', 'id', 'year'];
-
-						weatherLayer.queryFeatures(weatherQuery)
-						.then(function(response) {
-							const formattedData = response.features.map(item => {
-								return (
-									{
-										name: item.attributes.name,
-										id: item.attributes.id,
-										avg_temp: item.attributes.avg_temp,
-										state: item.attributes.state,
-										year: item.attributes.year
-									}
-								)
-							}) || [];
-							dispatch({type: 'POPULATE_WEATHER_DATA', payload: formattedData})
-						})
->>>>>>> 53274fee115d639f00a22082539a439a03774a99
 					}
 				});
 			});
@@ -106,31 +93,23 @@ const MapComponent = () => {
 
 	useEffect(() => {
 		if (mapRef && mapRef.current && mapRef.current.portalWebMap && currCity) {
-<<<<<<< HEAD
+			let result = [];
+
+			weatherData.forEach((item) => {
+				if (item.name === currCity) {
+					result.push(item);
+				}
+			});
+
+			dispatch({
+				type: "CHANGE_WEATHER_DATA",
+				payload: result,
+			});
+
 			mapRef.current.portalWebMap.when(function () {
 				cityLayer =
 					mapRef.current.portalWebMap.layers &&
 					mapRef.current.portalWebMap.layers.items[1];
-=======
-
-			let result = [];
-
-			weatherData.forEach(item => {
-				if (item.name === currCity) {
-					result.push(item)
-				}
-			})
-
-			dispatch({
-				type: 'CHANGE_WEATHER_DATA',
-				payload: result
-			})
-
-			mapRef.current.portalWebMap.when(function() {
-
-				cityLayer = mapRef.current.portalWebMap.layers
-					&& mapRef.current.portalWebMap.layers.items[1];
->>>>>>> 53274fee115d639f00a22082539a439a03774a99
 
 				if (cityLayer) {
 					var cityQuery = cityLayer.createQuery();
@@ -150,11 +129,7 @@ const MapComponent = () => {
 				}
 			});
 		}
-<<<<<<< HEAD
-	}, [currCity]);
-=======
-	}, [currCity, weatherData])
->>>>>>> 53274fee115d639f00a22082539a439a03774a99
+	}, [currCity, weatherData]);
 
 	useEffect(() => {
 		console.log("Weather data: ", weatherData);
