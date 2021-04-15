@@ -5,6 +5,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Chart from 'containers/Chart'
 
 const Main = () => {
 	return (
@@ -20,6 +21,7 @@ const Main = () => {
 				</Row>
 			</Container>
 			<Map />
+			<Chart />
 		</div>
 	);
 };
