@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { LocationContext } from "store/store";
 
-const StateDropdown = () => {
+const StateSelect = () => {
 	const states = ["Alaska", "Alabama"];
 	const { currState, dispatch } = useContext(LocationContext);
 
@@ -11,8 +11,6 @@ const StateDropdown = () => {
 
 	return (
 		<div>
-			<div>{currState}</div>
-
 			<form>
 				<select
 					name="state"
@@ -30,4 +28,4 @@ const StateDropdown = () => {
 	);
 };
 
-export default StateDropdown;
+export default StateSelect;

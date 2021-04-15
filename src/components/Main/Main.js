@@ -1,16 +1,23 @@
-import CityDropdown from "components/Selects/Dropdowns/CityDropdown";
-import StateDropdown from "components/Selects/Dropdowns/StateDropdown";
+import CitySelect from "components/Selects/CitySelect";
+import StateSelect from "components/Selects/StateSelect";
+import Chart from "containers/Chart";
 import Map from "containers/Map";
-import React from "react";
+import React, { useContext } from "react";
+import { LocationContext } from "store/store";
 
 const Main = () => {
+	const { currCity, currState } = useContext(LocationContext);
 	return (
 		<div>
-			<div className="flex flex-row">
-				<StateDropdown />
-				<CityDropdown />
+			<div className="absolute z-40 flex flex-row space-x-3 rounded">
+				<StateSelect />
+				<CitySelect />
 			</div>
 			<Map />
+			<div>
+				{currState} - {currCity}
+			</div>
+			<Chart />
 		</div>
 	);
 };
