@@ -1,26 +1,30 @@
-import NavBar from "./components/NavBar/NavBar";
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Main from "components/Main/Main";
 import APIDocs from "components/APIDocs/APIDocs";
-import NoMatch from "components/NoMatch/NoMatch";
+import Main from "components/Main/Main";
+import React from "react";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { LocationProvider } from "store/store";
+import NavBar from "./components/NavBar/NavBar";
 
 const App = () => {
 	return (
-		<BrowserRouter>
-			<NavBar />
-			<Switch>
-				<Route exact path="/">
-					<Main />
-				</Route>
-				<Route>
-					<APIDocs />
-				</Route>
-				<Route path="*">
-					<NoMatch />
-				</Route>
-			</Switch>
-		</BrowserRouter>
+		<LocationProvider>
+			<BrowserRouter>
+				<div className="max-h-full">
+					<NavBar />
+					<Switch>
+						<Route path="/api">
+							<APIDocs />
+						</Route>
+						<Route exact path="/">
+							<Main />
+						</Route>
+						<Route path="*">
+							<Redirect to="/" />
+						</Route>
+					</Switch>
+				</div>
+			</BrowserRouter>
+		</LocationProvider>
 	);
 };
 

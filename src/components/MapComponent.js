@@ -4,7 +4,7 @@ import MapView from "@arcgis/core/views/MapView";
 import "../stylesheets/map.css";
 
 const MapComponent = () => {
-	const mapRef = useRef({view: null});
+	const mapRef = useRef({ view: null });
 
 	useEffect(() => {
 		if (mapRef && mapRef.current) {
@@ -21,7 +21,7 @@ const MapComponent = () => {
 
 			view.when(() => {
 				mapRef.current.view = view;
-			})
+			});
 		}
 	}, [mapRef]);
 
