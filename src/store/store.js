@@ -6,6 +6,10 @@ const initialState = {
 	stateList: [],
 	cityList: [],
 	weatherData: [],
+<<<<<<< HEAD
+=======
+	currentWeatherList: []
+>>>>>>> 53274fee115d639f00a22082539a439a03774a99
 };
 
 const reducer = (state, { type, payload }) => {
@@ -20,6 +24,8 @@ const reducer = (state, { type, payload }) => {
 			return { ...state, cityList: payload };
 		case "POPULATE_WEATHER_DATA":
 			return { ...state, weatherData: payload };
+		case "CHANGE_WEATHER_DATA":
+			return { ...state, currentWeatherList: payload };
 		default:
 			throw new Error();
 	}
