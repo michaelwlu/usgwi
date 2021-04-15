@@ -7,7 +7,7 @@ const CitySelect = () => {
 	const handleChange = (event) => {
 		dispatch({ type: "CHANGE_CITY", payload: event.target.value });
 	};
-	
+
 	const cityNames = (cityList.length && cityList.map(city => city.attributes.name))
 		|| [];
 
@@ -21,8 +21,8 @@ const CitySelect = () => {
 					onChange={handleChange}
 				>
 					<option key="0">Select city</option>
-					{cityNames.length && cityNames.map((city) => (
-						<option key={city}>{city}</option>
+					{cityNames.length && cityNames.map((city, index) => (
+						<option key={index}>{city}</option>
 					))}
 				</select>
 			</form>
