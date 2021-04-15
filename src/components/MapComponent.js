@@ -124,6 +124,10 @@ const MapComponent = () => {
 		}
 	}, [currCity, weatherData])
 
+	useEffect(() => {
+		console.log('Weather data: ', weatherData)
+	}, [weatherData])
+
 	return null;
 };
 
