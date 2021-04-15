@@ -2,3 +2,21 @@
 	height: 400px;
 	width: 100%;
 }
+
+.absolute.z-40 {
+	margin-left: 10px;
+}
+
+.esri-ui-inner-container.esri-ui-corner-container {
+	display: none;
+}
+
+.esri-component.esri-attribution.esri-widget {
+	white-space: wrap;
+	font-size: 8px;
+	display: inline-flex;
+}
+
+.esri-attribution__powered-by {
+	margin-left: 10px;
+}
