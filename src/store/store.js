@@ -5,6 +5,7 @@ const initialState = {
 	currCity: "Anchorage",
 	stateList: [],
 	cityList: [],
+	currCityTemps: [],
 };
 
 const reducer = (state, { type, payload }) => {
@@ -17,6 +18,8 @@ const reducer = (state, { type, payload }) => {
 			return { ...state, stateList: payload };
 		case "POPULATE_CITY_LIST":
 			return { ...state, cityList: payload };
+		case "POPULATE_CITY_TEMPS":
+			return { ...state, currCityTemps: payload };
 		default:
 			throw new Error();
 	}

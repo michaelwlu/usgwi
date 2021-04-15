@@ -6,9 +6,9 @@ import MapView from "@arcgis/core/views/MapView";
 import "../stylesheets/map.css";
 
 const MapComponent = () => {
-	const mapRef = useRef({ view: null });
-	const portalURL = 'https://age.spatialfrontgis.com/portal';
-	const portalId = 'a759d3ccd3754a2e91d307d3a6321dc1';
+	const mapRef = useRef({ view: null, portalWebMap: null });
+	const portalURL = "https://age.spatialfrontgis.com/portal";
+	const portalId = "a759d3ccd3754a2e91d307d3a6321dc1";
 	let cityLayer;
 	const { currCity, cityList, dispatch } = useContext(LocationContext);
 
@@ -32,21 +32,26 @@ const MapComponent = () => {
 				mapRef.current.view = view;
 				mapRef.current.portalWebMap = portalWebMap;
 
-				mapRef.current.portalWebMap.when(function() {
-
+				mapRef.current.portalWebMap.when(function () {
 					cityLayer = portalWebMap.layers && portalWebMap.layers.items[1];
 
 					if (cityLayer) {
 						var cityQuery = cityLayer.createQuery();
 						cityQuery.where = "objectid > 0";
-						cityQuery.outFields = [ "name", "objectid", "field1", "id" ];
+						cityQuery.outFields = ["name", "objectid", "field1", "id"];
 
-						cityLayer.queryFeatures(cityQuery)
-						.then(function(response) {
-							if (!cityList.length) {
-								dispatch({ type: "POPULATE_CITY_LIST", payload: response.features });
-							}
-						 });
+						try {
+							cityLayer.queryFeatures(cityQuery).then(function (response) {
+								if (!cityList.length) {
+									dispatch({
+										type: "POPULATE_CITY_LIST",
+										payload: response.features,
+									});
+								}
+							});
+						} catch (err) {
+							console.log(err);
+						}
 					}
 				});
 			});
@@ -55,30 +60,30 @@ const MapComponent = () => {
 
 	useEffect(() => {
 		if (mapRef && mapRef.current && mapRef.current.portalWebMap && currCity) {
-			mapRef.current.portalWebMap.when(function() {
-
-				cityLayer = mapRef.current.portalWebMap.layers
-					&& mapRef.current.portalWebMap.layers.items[1];
+			mapRef.current.portalWebMap.when(function () {
+				cityLayer =
+					mapRef.current.portalWebMap.layers &&
+					mapRef.current.portalWebMap.layers.items[1];
 
 				if (cityLayer) {
 					var cityQuery = cityLayer.createQuery();
 					cityQuery.where = `name = '${currCity}'`;
-					cityQuery.outFields = [ "name", "objectid", "field1", "id" ];
+					cityQuery.outFields = ["name", "objectid", "field1", "id"];
 
-					cityLayer.queryFeatures(cityQuery)
-					.then(function(response) {
-						const features = response.features;
-						if (features.length) {
-							mapRef.current.view.goTo({
-								target: features[0],
-								zoom: 8
-							})
-						}
-					 });
+					try {
+						cityLayer.queryFeatures(cityQuery).then(function (response) {
+							const features = response.features;
+							if (features.length) {
+								mapRef.current.view.goTo(features[0]);
+							}
+						});
+					} catch (err) {
+						console.log(err);
+					}
 				}
 			});
 		}
-	}, [currCity])
+	}, [currCity]);
 
 	return null;
 };
