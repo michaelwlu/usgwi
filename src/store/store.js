@@ -5,7 +5,7 @@ const initialState = {
 	currCity: "Anchorage",
 	stateList: [],
 	cityList: [],
-	currCityTemps: [],
+	weatherData: [],
 };
 
 const reducer = (state, { type, payload }) => {
@@ -18,8 +18,8 @@ const reducer = (state, { type, payload }) => {
 			return { ...state, stateList: payload };
 		case "POPULATE_CITY_LIST":
 			return { ...state, cityList: payload };
-		case "POPULATE_CITY_TEMPS":
-			return { ...state, currCityTemps: payload };
+		case "POPULATE_WEATHER_DATA":
+			return { ...state, weatherData: payload };
 		default:
 			throw new Error();
 	}
