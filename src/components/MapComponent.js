@@ -4,7 +4,7 @@ import MapView from "@arcgis/core/views/MapView";
 import "../stylesheets/map.css";
 
 const MapComponent = () => {
-	const mapRef = useRef({});
+	const mapRef = useRef({ view: null });
 
 	useEffect(() => {
 		if (mapRef && mapRef.current) {
@@ -19,7 +19,9 @@ const MapComponent = () => {
 				zoom: 12,
 			});
 
-			mapRef.current.view = view;
+			view.when(() => {
+				mapRef.current.view = view;
+			});
 		}
 	}, [mapRef]);
 

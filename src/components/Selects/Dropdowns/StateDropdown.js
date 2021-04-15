@@ -1,22 +1,31 @@
-import React from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+import React, { useContext } from "react";
+import { LocationContext } from "store/store";
 
 const StateDropdown = () => {
 	const states = ["Alaska", "Alabama"];
+	const { currState, dispatch } = useContext(LocationContext);
+
+	const handleChange = (event) => {
+		dispatch({ type: "CHANGE_STATE", payload: event.target.value });
+	};
 
 	return (
 		<div>
-			<Dropdown>
-				<Dropdown.Toggle variant="primary" id="dropdown-basic">
-					Select state
-				</Dropdown.Toggle>
+			<div>{currState}</div>
 
-				<Dropdown.Menu>
+			<form>
+				<select
+					name="state"
+					id="state"
+					value={currState}
+					onChange={handleChange}
+				>
+					<option key="0">Select state</option>
 					{states.map((state) => (
-						<Dropdown.Item as="button">{state}</Dropdown.Item>
+						<option key={state}>{state}</option>
 					))}
-				</Dropdown.Menu>
-			</Dropdown>
+				</select>
+			</form>
 		</div>
 	);
 };
