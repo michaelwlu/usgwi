@@ -96,11 +96,11 @@ const MapComponent = () => {
 			let result = [];
 
 			weatherData.forEach((item) => {
-				if (item.name === currCity) {
+				if (item.id === currCity) {
 					result.push(item);
 				}
 			});
-
+			console.log(result);
 			dispatch({
 				type: "CHANGE_WEATHER_DATA",
 				payload: result,
@@ -131,7 +131,7 @@ const MapComponent = () => {
 	}, [currCity, weatherData]);
 
 	useEffect(() => {
-		console.log("Weather data: ", weatherData);
+		// console.log("Weather data: ", weatherData);
 	}, [weatherData]);
 
 	return null;

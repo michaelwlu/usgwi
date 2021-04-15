@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 
 const initialState = {
 	currState: "Alaska",
-	currCity: "Anchorage",
+	currCity: "",
 	stateList: [],
 	cityList: [],
 	weatherData: [],
