@@ -8,7 +8,14 @@ const CitySelect = () => {
 		dispatch({ type: "CHANGE_CITY", payload: event.target.value });
 	};
 
-	const cityNames = (cityList.length && cityList.map(city => city.attributes.name))
+	let cityNames = (cityList.length && cityList.map(city => {
+		return (
+			{
+				name: city.attributes.name,
+				id: city.attributes.id
+			}
+		)
+	}))
 		|| [];
 
 	return (
@@ -22,7 +29,12 @@ const CitySelect = () => {
 				>
 					<option key="0">Select city</option>
 					{cityNames.length && cityNames.map((city, index) => (
-						<option key={index}>{city}</option>
+						<option
+							key={index}
+							value={city.objectid}
+						>
+							{city.name}
+						</option>
 					))}
 				</select>
 			</form>
