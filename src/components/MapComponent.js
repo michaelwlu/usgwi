@@ -10,8 +10,7 @@ const MapComponent = () => {
 	const portalURL = 'https://age.spatialfrontgis.com/portal';
 	const portalId = 'a759d3ccd3754a2e91d307d3a6321dc1';
 	let cityLayer;
-	const cityLayerId = 'Cities';
-	const { cityList, dispatch } = useContext(LocationContext);
+	const { currCity, cityList, dispatch } = useContext(LocationContext);
 
 	useEffect(() => {
 		if (mapRef && mapRef.current) {
@@ -35,7 +34,7 @@ const MapComponent = () => {
 
 				mapRef.current.portalWebMap.when(function() {
 
-					cityLayer = portalWebMap.layers && portalWebMap.layers.items[0];
+					cityLayer = portalWebMap.layers && portalWebMap.layers.items[1];
 
 					if (cityLayer) {
 						var cityQuery = cityLayer.createQuery();
@@ -53,6 +52,33 @@ const MapComponent = () => {
 			});
 		}
 	}, [mapRef]);
+
+	useEffect(() => {
+		if (mapRef && mapRef.current && mapRef.current.portalWebMap && currCity) {
+			mapRef.current.portalWebMap.when(function() {
+
+				cityLayer = mapRef.current.portalWebMap.layers
+					&& mapRef.current.portalWebMap.layers.items[1];
+
+				if (cityLayer) {
+					var cityQuery = cityLayer.createQuery();
+					cityQuery.where = `name = '${currCity}'`;
+					cityQuery.outFields = [ "name", "objectid", "field1", "id" ];
+
+					cityLayer.queryFeatures(cityQuery)
+					.then(function(response) {
+						const features = response.features;
+						if (features.length) {
+							mapRef.current.view.goTo({
+								target: features[0],
+								zoom: 8
+							})
+						}
+					 });
+				}
+			});
+		}
+	}, [currCity])
 
 	return null;
 };
