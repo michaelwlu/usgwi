@@ -1,17 +1,27 @@
-import Map from './containers/Map';
-import './App.css';
+import NavBar from "./components/NavBar/NavBar";
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Main from "components/Main/Main";
+import APIDocs from "components/APIDocs/APIDocs";
+import NoMatch from "components/NoMatch/NoMatch";
 
-function App() {
-  return (
-    <div className="app">
-    <div className='row'>
-      <div className='search-form col-md-4'>
-        <p>Fill in with search form...</p>
-      </div>
-      <Map />
-    </div>
-    </div>
-  );
-}
+const App = () => {
+	return (
+		<BrowserRouter>
+			<NavBar />
+			<Switch>
+				<Route exact path="/">
+					<Main />
+				</Route>
+				<Route>
+					<APIDocs />
+				</Route>
+				<Route path="*">
+					<NoMatch />
+				</Route>
+			</Switch>
+		</BrowserRouter>
+	);
+};
 
 export default App;
