@@ -7,7 +7,7 @@ const CitySelect = () => {
 	const handleChange = (event) => {
 		dispatch({ type: "CHANGE_CITY", payload: event.target.value });
 	};
-	
+
 	const cityNames = (cityList.length && cityList.map(city => city.attributes.name))
 		|| [];
 

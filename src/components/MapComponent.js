@@ -42,7 +42,7 @@ const MapComponent = () => {
 						cityQuery.where = "objectid > 0";
 						cityQuery.outFields = [ "name", "objectid", "field1", "id" ];
 
-						cityLayer.queryFeatures(query)
+						cityLayer.queryFeatures(cityQuery)
 						.then(function(response){
 							dispatch({ type: "POPULATE_CITY_LIST", payload: response.features });
 						 });
