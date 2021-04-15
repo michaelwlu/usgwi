@@ -71,7 +71,7 @@ const MapComponent = () => {
 										id: item.attributes.id,
 										avg_temp: item.attributes.avg_temp,
 										state: item.attributes.state,
-										year: item.attribtues.year
+										year: item.attributes.year
 									}
 								)
 							}) || [];
@@ -86,10 +86,18 @@ const MapComponent = () => {
 	useEffect(() => {
 		if (mapRef && mapRef.current && mapRef.current.portalWebMap && currCity) {
 
+			let result = [];
 
-			const result = weatherData.find(item => item.name === currCity)
+			weatherData.forEach(item => {
+				if (item.name === currCity) {
+					result.push(item)
+				}
+			})
 
-			console.log("Result: ", result)
+			dispatch({
+				type: 'CHANGE_WEATHER_DATA',
+				payload: result
+			})
 
 			mapRef.current.portalWebMap.when(function() {
 
@@ -115,10 +123,6 @@ const MapComponent = () => {
 			});
 		}
 	}, [currCity, weatherData])
-
-	useEffect(() => {
-		console.log('Weather data: ', weatherData)
-	}, [weatherData])
 
 	return null;
 };
