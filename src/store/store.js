@@ -1,6 +1,11 @@
 import React, { createContext, useReducer } from "react";
 
-const initialState = { currState: "Alaska", currCity: "Anchorage" };
+const initialState = {
+	currState: "Alaska",
+	currCity: "Anchorage",
+	stateList: [],
+	cityList: [],
+};
 
 const reducer = (state, { type, payload }) => {
 	switch (type) {
@@ -8,6 +13,10 @@ const reducer = (state, { type, payload }) => {
 			return { ...state, currState: payload };
 		case "CHANGE_CITY":
 			return { ...state, currCity: payload };
+		case "POPULATE_STATE_LIST":
+			return { ...state, stateList: payload };
+		case "POPULATE_CITY_LIST":
+			return { ...state, cityList: payload };
 		default:
 			throw new Error();
 	}
@@ -19,9 +28,7 @@ export const LocationProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (
-		<LocationContext.Provider
-			value={{ currCity: state.currCity, currState: state.currState, dispatch }}
-		>
+		<LocationContext.Provider value={{ ...state, dispatch }}>
 			{children}
 		</LocationContext.Provider>
 	);
