@@ -6,11 +6,12 @@ import MapView from "@arcgis/core/views/MapView";
 import "../stylesheets/map.css";
 
 const MapComponent = () => {
-	const mapRef = useRef({ view: null });
-	const portalURL = 'https://age.spatialfrontgis.com/portal';
-	const portalId = 'a759d3ccd3754a2e91d307d3a6321dc1';
+	const mapRef = useRef({ view: null, portalWebMap: null });
+	const portalURL = "https://age.spatialfrontgis.com/portal";
+	const portalId = "a759d3ccd3754a2e91d307d3a6321dc1";
+
 	let cityLayer;
-	const cityLayerId = 'Cities';
+	const cityLayerId = "Cities";
 	const { cityList, dispatch } = useContext(LocationContext);
 
 	useEffect(() => {
@@ -33,19 +34,20 @@ const MapComponent = () => {
 				mapRef.current.view = view;
 				mapRef.current.portalWebMap = portalWebMap;
 
-				mapRef.current.portalWebMap.when(function() {
-
+				mapRef.current.portalWebMap.when(function () {
 					cityLayer = portalWebMap.layers && portalWebMap.layers.items[0];
 
 					if (cityLayer) {
 						var cityQuery = cityLayer.createQuery();
 						cityQuery.where = "objectid > 0";
-						cityQuery.outFields = [ "name", "objectid", "field1", "id" ];
+						cityQuery.outFields = ["name", "objectid", "field1", "id"];
 
-						cityLayer.queryFeatures(query)
-						.then(function(response){
-							dispatch({ type: "POPULATE_CITY_LIST", payload: response.features });
-						 });
+						cityLayer.queryFeatures(query).then(function (response) {
+							dispatch({
+								type: "POPULATE_CITY_LIST",
+								payload: response.features,
+							});
+						});
 					}
 				});
 			});
