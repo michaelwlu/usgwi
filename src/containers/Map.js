@@ -5,7 +5,7 @@ const Map = () => {
 	return (
 		<div className="qsr-map col-md-8">
 			<MapComponent />
-			<div className="w-full webmap h-96" />
+			<div className="webmap" id="viewDiv" />
 		</div>
 	);
 };
