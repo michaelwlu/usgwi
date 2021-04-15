@@ -2,12 +2,14 @@ import React, { useContext } from "react";
 import { LocationContext } from "store/store";
 
 const CitySelect = () => {
-	const cities = ["New York", "Anchorage"];
-	const { currCity, dispatch } = useContext(LocationContext);
+	const { currCity, cityList, dispatch } = useContext(LocationContext);
 
 	const handleChange = (event) => {
 		dispatch({ type: "CHANGE_CITY", payload: event.target.value });
 	};
+	
+	const cityNames = (cityList.length && cityList.map(city => city.attributes.name))
+		|| [];
 
 	return (
 		<div>
@@ -19,7 +21,7 @@ const CitySelect = () => {
 					onChange={handleChange}
 				>
 					<option key="0">Select city</option>
-					{cities.map((city) => (
+					{cityNames.length && cityNames.map((city) => (
 						<option key={city}>{city}</option>
 					))}
 				</select>
