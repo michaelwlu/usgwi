@@ -9,8 +9,7 @@ const MapComponent = () => {
 	const mapRef = useRef({ view: null, portalWebMap: null });
 	const portalURL = "https://age.spatialfrontgis.com/portal";
 	const portalId = "a759d3ccd3754a2e91d307d3a6321dc1";
-	let cityLayer;
-	let weatherLayer;
+
 	const { currCity, weatherData, cityList, dispatch } = useContext(
 		LocationContext
 	);
@@ -36,8 +35,9 @@ const MapComponent = () => {
 				mapRef.current.portalWebMap = portalWebMap;
 
 				mapRef.current.portalWebMap.when(function () {
-					weatherLayer = portalWebMap.layers && portalWebMap.layers.items[0];
-					cityLayer = portalWebMap.layers && portalWebMap.layers.items[1];
+					const weatherLayer =
+						portalWebMap.layers && portalWebMap.layers.items[0];
+					const cityLayer = portalWebMap.layers && portalWebMap.layers.items[1];
 
 					if (cityLayer) {
 						var cityQuery = cityLayer.createQuery();
@@ -107,7 +107,7 @@ const MapComponent = () => {
 			});
 
 			mapRef.current.portalWebMap.when(function () {
-				cityLayer =
+				const cityLayer =
 					mapRef.current.portalWebMap.layers &&
 					mapRef.current.portalWebMap.layers.items[1];
 
@@ -129,10 +129,6 @@ const MapComponent = () => {
 			});
 		}
 	}, [currCity, weatherData]);
-
-	useEffect(() => {
-		// console.log("Weather data: ", weatherData);
-	}, [weatherData]);
 
 	return null;
 };
